@@ -1,5 +1,5 @@
 package com.company;
 
-public interface Operand {
+public interface Operand extends OperationComponent{
     double getValue();
 }

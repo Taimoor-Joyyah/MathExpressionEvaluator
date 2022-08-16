@@ -1,4 +1,7 @@
-package com.company;
+package com.company.operation;
+
+import com.company.operation.operand.Operand;
+import com.company.operation.operator.Operator;
 
 public class Operation {
     private final Operand left;

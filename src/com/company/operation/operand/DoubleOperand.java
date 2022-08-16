@@ -1,4 +1,4 @@
-package com.company;
+package com.company.operation.operand;
 
 public class DoubleOperand implements Operand{
     private final double operand;

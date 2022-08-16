@@ -1,4 +1,4 @@
-package com.company;
+package com.company.operation.operator;
 
 public class OperatorFactory {
     private static Addition addition;

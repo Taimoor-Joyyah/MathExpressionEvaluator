@@ -1,4 +1,10 @@
-package com.company;
+package com.company.operation;
+
+import com.company.operation.operand.DoubleOperand;
+import com.company.operation.operand.Operand;
+import com.company.operation.operand.OperationOperand;
+import com.company.operation.operator.Operator;
+import com.company.operation.operator.OperatorFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,26 +16,16 @@ public class OperationFormat {
 
     public static Operation StringToOperation(String format) {
         //Tokenizing
-        List<String> tokens = tokenizing(format);
-        System.out.println(tokens);
+        List<OperationComponent> components = tokenizing(format);
+        System.out.println(components);
         //Parsing and validating
-        leftOrdering(tokens);
-        System.out.println(tokens);
+        leftOrdering(components);
+        System.out.println(components);
         //creating Operation
-        return createOperation(tokens);
+        return createOperation(components);
     }
 
-    private static Operation createOperation(List<String> tokens) {
-        List<OperationComponent> components = new ArrayList<>();
-
-        for (String token : tokens) {
-            char[] tokenChar = token.toCharArray();
-            if (tokenChar.length == 1 && isOperator(tokenChar[0]))
-                components.add(getOperator(tokenChar[0]));
-            else
-                components.add(new DoubleOperand(Double.parseDouble(token)));
-        }
-
+    private static Operation createOperation(List<OperationComponent> components) {
         for (int index = 2; true; index++) {
             if (components.get(index) instanceof Operator operator) {
                 Operand left = (Operand) components.get(index - 2);
@@ -59,36 +55,35 @@ public class OperationFormat {
         };
     }
 
-    private static void leftOrdering(List<String> tokens) {
-        if (tokens.size() % 2 == 0)
+    private static void leftOrdering(List<OperationComponent> components) {
+        if (components.size() % 2 == 0)
             throw new ArithmeticException("Invalid Expression found");
-        String[] operators = {"/", "*", "+", "-"};
-        for (var operator : operators) {
+        List<String> OperationPrecedence = Arrays.asList("/", "*", "+", "-");
+        for (var operator : OperationPrecedence) {
             boolean operatorFound = false;
-            for (int i = 1; i < tokens.size(); i++) {
+            for (int index = 1; index < components.size(); index++) {
                 if (operatorFound) {
-                    var chars = tokens.get(i).toCharArray();
-                    if (chars.length == 1 && isOperator(chars[0])) {
-                        var array = Arrays.stream(operators).toList();
-                        if (array.indexOf(Character.toString(chars[0])) >= array.indexOf(operator)) {
+                    if (components.get(index) instanceof Operator) {
+                        if (OperationPrecedence.indexOf(((Operator) components.get(index)).getSymbol()) >=
+                                OperationPrecedence.indexOf(operator)) {
                             operatorFound = false;
-                            i--;
+                            index--;
                             continue;
                         }
                     }
-                    var temp = tokens.get(i);
-                    tokens.set(i, tokens.get(i - 1));
-                    tokens.set(i - 1, temp);
-                }
-                if (tokens.get(i).equals(operator)) {
+                    var temp = components.get(index);
+                    components.set(index, components.get(index - 1));
+                    components.set(index - 1, temp);
+                } else if ((components.get(index) instanceof Operator) &&
+                        ((Operator) components.get(index)).getSymbol().equals(operator)) {
                     operatorFound = true;
                 }
             }
         }
     }
 
-    private static List<String> tokenizing(String format) {
-        List<String> tokenList = new ArrayList<>();
+    private static List<OperationComponent> tokenizing(String format) {
+        List<OperationComponent> components = new ArrayList<>();
         int index = 0;
         while (index < format.length()) {
             StringBuilder token = new StringBuilder();
@@ -98,16 +93,16 @@ public class OperationFormat {
                 char character = format.charAt(index);
                 if (character == ' ') {
                     continue;
-                }
-                else if (isDouble(character)) {
+                } else if (isDouble(character)) {
                     token.append(character);
                     isNegative = false;
                     isPreviousOperator = false;
                 } else if (isOperator(character)) {
                     if (!isPreviousOperator) {
-                        if (!token.isEmpty())
-                            tokenList.add(token.toString());
-                        tokenList.add(Character.toString(character));
+                        if (!token.isEmpty()) {
+                            components.add(new DoubleOperand(Double.parseDouble(token.toString())));
+                        }
+                        components.add(getOperator(character));
                         index++;
                         break;
                     } else if (character == '-' && !isNegative) {
@@ -119,13 +114,13 @@ public class OperationFormat {
                     throw new UnsupportedOperationException("Invalid Character for Expression found");
 
                 if (index == format.length() - 1) {
-                    tokenList.add(token.toString());
+                    components.add(new DoubleOperand(Double.parseDouble(token.toString())));
                     index++;
                     break;
                 }
             }
         }
-        return tokenList;
+        return components;
     }
 
     private static boolean isDouble(char character) {

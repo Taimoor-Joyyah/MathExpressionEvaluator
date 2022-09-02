@@ -15,10 +15,13 @@ public class OperationFormat {
 
     public static Operation StringToOperation(String format) {
         List<OperationComponent> components = declaration(tokenizing(format));
+        System.out.print("Expression: ");
         displayComponents(components);
         leftOrdering(components);
         removeBrackets(components);
+        System.out.print("LeftOrdered: ");
         displayComponents(components);
+        System.out.print("Result: ");
         return createOperation(components);
     }
 

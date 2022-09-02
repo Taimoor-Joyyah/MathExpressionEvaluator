@@ -11,4 +11,9 @@ public class DoubleOperand implements Operand{
     public double getValue() {
         return operand;
     }
+
+    @Override
+    public String toString() {
+        return Double.toString(operand);
+    }
 }

@@ -1,6 +1,6 @@
 package com.company.operation.operand;
 
-public class DoubleOperand implements Operand{
+public class DoubleOperand implements Operand {
     private final double operand;
 
     public DoubleOperand(double operand) {
@@ -10,5 +10,13 @@ public class DoubleOperand implements Operand{
     @Override
     public double getValue() {
         return operand;
+    }
+
+    @Override
+    public String toString() {
+        if (operand == (double) Math.round(operand))
+            return String.valueOf((int) operand);
+        else
+            return Double.toString(operand);
     }
 }

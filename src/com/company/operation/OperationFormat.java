@@ -34,6 +34,8 @@ public class OperationFormat {
     }
 
     private static Operation createOperation(List<OperationComponent> components) {
+        if (components.size() == 1)
+            return new Operation((DoubleOperand) components.get(0), new DoubleOperand(0), getOperator("+"));
         for (int index = 2; components.size() != 1; index++)
             if (components.get(index) instanceof Operator operator) {
                 exchangeComponent(components, index, operator);

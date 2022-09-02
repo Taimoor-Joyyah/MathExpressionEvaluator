@@ -13,4 +13,13 @@ public class OperationOperand implements Operand{
     public double getValue() {
         return operand.calculate();
     }
+
+    public Operation getOperand() {
+        return operand;
+    }
+
+    @Override
+    public String toString() {
+        return operand.toString();
+    }
 }

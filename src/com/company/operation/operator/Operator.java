@@ -5,5 +5,5 @@ import com.company.operation.OperationComponent;
 
 public interface Operator extends OperationComponent {
     double evaluate(Operand left, Operand right);
-    String getSymbol();
+    OperatorType getType();
 }

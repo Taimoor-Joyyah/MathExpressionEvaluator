@@ -11,4 +11,12 @@ public class DoubleOperand implements Operand{
     public double getValue() {
         return operand;
     }
+
+    @Override
+    public String toString() {
+        if (operand == (double) Math.round(operand))
+            return String.valueOf((int) operand);
+        else
+            return Double.toString(operand);
+    }
 }

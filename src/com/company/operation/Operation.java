@@ -17,4 +17,9 @@ public class Operation {
     public double calculate() {
         return operator.evaluate(left, right);
     }
+
+    @Override
+    public String toString() {
+        return left + " " + operator + " " + right;
+    }
 }

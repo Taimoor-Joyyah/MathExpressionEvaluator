@@ -4,7 +4,8 @@ import com.company.operation.OperationComponent;
 import com.company.operation.operator.Operator;
 import com.company.operation.operator.OperatorType;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class ExpressionFormatting {
     public static void removeBrackets(List<OperationComponent> components) {

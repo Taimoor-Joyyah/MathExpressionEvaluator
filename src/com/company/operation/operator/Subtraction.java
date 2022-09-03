@@ -2,7 +2,7 @@ package com.company.operation.operator;
 
 import com.company.operation.operand.Operand;
 
-class Subtraction implements Operator{
+class Subtraction implements Operator {
     @Override
     public double evaluate(Operand left, Operand right) {
         return left.getValue() - right.getValue();

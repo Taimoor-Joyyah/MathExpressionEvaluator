@@ -9,7 +9,7 @@ import com.company.operation.operand.Operand;
 import com.company.operation.operand.OperationOperand;
 import com.company.operation.operator.Operator;
 
-import java.util.*;
+import java.util.List;
 
 public class OperationParser {
     private OperationParser() {

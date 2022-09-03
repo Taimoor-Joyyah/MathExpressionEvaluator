@@ -1,6 +1,8 @@
-package com.company.operation;
+package com.company.operation.formatter;
 
-public class Bracket implements OperationComponent{
+import com.company.operation.OperationComponent;
+
+public class Bracket implements OperationComponent {
     private final BracketType bracketType;
 
     public Bracket(BracketType bracketType) {

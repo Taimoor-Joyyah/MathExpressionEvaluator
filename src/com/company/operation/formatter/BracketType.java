@@ -1,4 +1,4 @@
-package com.company.operation;
+package com.company.operation.formatter;
 
 public enum BracketType {
     OPEN,

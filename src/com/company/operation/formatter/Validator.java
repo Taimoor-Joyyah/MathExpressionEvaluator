@@ -1,6 +1,7 @@
 package com.company.operation.formatter;
 
 import com.company.operation.OperationComponent;
+import com.company.operation.exception.InCompleteException;
 
 import java.util.List;
 
@@ -21,14 +22,14 @@ public class Validator {
         return true;
     }
 
-    public static void validatingExpression(List<OperationComponent> components) {
+    public static void validatingExpression(List<OperationComponent> components) throws InCompleteException {
         var brackets = components.stream()
                 .filter(c -> c instanceof Bracket)
                 .map(c -> ((Bracket) c).getBracketType()).toList();
         if (components.size() % 2 != 1 ||
                 brackets.stream().filter(e -> e == BracketType.OPEN).count() != brackets.stream().filter(e -> e == BracketType.CLOSE).count() ||
                 !validBrackets(components))
-            throw new ArithmeticException("Invalid Expression found");
+            throw new InCompleteException("Incomplete Expression found");
     }
 
     public static boolean isDouble(String string) {

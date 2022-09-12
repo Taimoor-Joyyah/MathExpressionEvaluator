@@ -1,5 +1,7 @@
 package com.company.operation;
 
+import com.company.operation.exception.InCompleteException;
+import com.company.operation.exception.InvalidExpressionException;
 import com.company.operation.formatter.ExpressionFormatting;
 import com.company.operation.formatter.Report;
 import com.company.operation.formatter.StringFormatting;
@@ -15,7 +17,7 @@ public class OperationParser {
     private OperationParser() {
     }
 
-    public static Operation StringToOperation(String format) {
+    public static Operation StringToOperation(String format) throws InvalidExpressionException, InCompleteException {
         List<OperationComponent> components = StringFormatting.componentParser(format);
         System.out.print("Expression: ");
         Report.displayComponents(components);
@@ -46,5 +48,4 @@ public class OperationParser {
         components.remove(index - 1);
         components.remove(index - 2);
     }
-
 }
